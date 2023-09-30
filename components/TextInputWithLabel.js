@@ -3,7 +3,16 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Colors from '../theme/Colors';
 import { Fonts } from '../theme/Fonts';
 
-const TextInputWithLabel = ({ value, showLabel = false, onChangeText, placeholder, inputStyle, label, ...props }) => {
+const TextInputWithLabel = ({
+	value,
+	showLabel = false,
+	onChangeText,
+	placeholder,
+	inputStyle,
+	label,
+	keyboardType = 'default',
+	...props
+}) => {
 	return (
 		<View style={styles.container}>
 			{showLabel && <Text style={[styles.labelText]}>{label} </Text>}
@@ -12,6 +21,7 @@ const TextInputWithLabel = ({ value, showLabel = false, onChangeText, placeholde
 				value={value}
 				placeholder={placeholder}
 				onChangeText={onChangeText}
+				keyboardType={keyboardType}
 				{...props}
 			/>
 		</View>

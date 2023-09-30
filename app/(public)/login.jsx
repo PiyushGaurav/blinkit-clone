@@ -16,14 +16,16 @@ const login = () => {
 			<View style={styles.content}>
 				<Text style={styles.subTitle}>Log in or Sign up</Text>
 				<TextInputWithLabel
-					placeholder={'Enter your phone number'}
+					placeholder={'Enter mobile number'}
 					label={'Phone'}
 					onChangeText={text => setPhone(text)}
+					keyboardType={'number-pad'}
 				/>
 				<ButtonComp
-					btnText={'Login with Phone Number'}
+					btnText={'Continue'}
+					disabled={phone.length == 0}
 					onPress={() => {
-						router.replace('/otp');
+						router.replace({ pathname: '/otp', params: { phone } });
 					}}
 				/>
 			</View>

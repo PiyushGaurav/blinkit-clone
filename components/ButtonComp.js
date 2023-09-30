@@ -4,9 +4,14 @@ import CommonStyles from '../theme/CommonStyles';
 import { Fonts } from '../theme/Fonts';
 import Colors from '../theme/Colors';
 
-const ButtonComp = ({ onPress = () => {}, btnText = '', btnTextStyle = {}, btnStyle = {} }) => {
+const ButtonComp = ({ onPress = () => {}, btnText = '', btnTextStyle = {}, btnStyle = {}, disabled = false }) => {
 	return (
-		<TouchableOpacity style={[{ ...styles.btnStyle, ...btnStyle }]} activeOpacity={0.8} onPress={onPress}>
+		<TouchableOpacity
+			style={[{ ...styles.btnStyle, ...btnStyle, backgroundColor: disabled ? Colors.lightGrey : Colors.red }]}
+			disabled={disabled}
+			activeOpacity={0.8}
+			onPress={onPress}
+		>
 			<Text style={[{ ...styles.btnTextStyle, ...btnTextStyle }]}>{btnText}</Text>
 		</TouchableOpacity>
 	);
@@ -24,7 +29,8 @@ const styles = StyleSheet.create({
 	btnTextStyle: {
 		color: Colors.white,
 		padding: 10,
-		...Fonts.medium(14)
+		...Fonts.medium(14),
+		fontWeight: '600'
 	}
 });
 
