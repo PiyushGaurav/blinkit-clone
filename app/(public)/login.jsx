@@ -1,50 +1,68 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react';
 import { router } from 'expo-router';
+import { Fonts } from '../../theme/Fonts';
+import CommonStyles from '../../theme/CommonStyles';
+import TextInputWithLabel from '../../components/TextInputWithLabel';
+import ButtonComp from '../../components/ButtonComp';
 
 const login = () => {
+	const [phone, setPhone] = useState('');
 	return (
-		<View style={{ flex: 1, marginTop: 300, backgroundColor: 'transparent' }}>
-			<TouchableOpacity
-				onPress={() => router.back()}
-				style={{
-					position: 'absolute',
-					bottom: 205,
-					width: 30,
-					height: 30,
-					borderRadius: 15,
-					backgroundColor: 'white',
-					justifyContent: 'center',
-					alignItems: 'center',
-					alignSelf: 'center'
-				}}
-			>
+		<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+			<TouchableOpacity onPress={() => router.back()} style={styles.closeIconView}>
 				<Text>x</Text>
 			</TouchableOpacity>
-			<View
-				style={{
-					height: 200,
-					borderTopRightRadius: 10,
-					borderTopLeftRadius: 10,
-					backgroundColor: 'white',
-					width: '100%',
-					position: 'absolute',
-					bottom: 0,
-					justifyContent: 'center'
-				}}
-			>
-				<Text>Login</Text>
-				<Button
+			<View style={styles.content}>
+				<Text style={styles.subTitle}>Log in or Sign up</Text>
+				<TextInputWithLabel
+					placeholder={'Enter your phone number'}
+					label={'Phone'}
+					onChangeText={text => setPhone(text)}
+				/>
+				<ButtonComp
+					btnText={'Login with Phone Number'}
 					onPress={() => {
 						router.replace('/otp');
 					}}
-					title="Login with Phone Number"
 				/>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 
 export default login;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: 'rgba(0,0,0,0.2)',
+		justifyContent: 'flex-end'
+	},
+	closeIconView: {
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		backgroundColor: 'white',
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'center',
+		marginVertical: 10
+	},
+	content: {
+		height: 200,
+		borderTopRightRadius: 10,
+		borderTopLeftRadius: 10,
+		backgroundColor: 'white',
+		width: '100%',
+		justifyContent: 'flex-end',
+		bottom: 0,
+		justifyContent: 'center',
+		...CommonStyles.shadowStyle,
+		zIndex: 10
+	},
+	subTitle: {
+		textAlign: 'center',
+		...Fonts.bold(16)
+	}
+});

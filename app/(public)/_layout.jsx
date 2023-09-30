@@ -1,21 +1,25 @@
 import React from 'react';
 import { Stack } from 'expo-router';
+import Colors from '../../theme/Colors';
 
 const PublicLayout = () => {
 	return (
 		<Stack
 			screenOptions={{
 				headerStyle: {
-					backgroundColor: '#6c47ff'
+					backgroundColor: Colors.white
 				},
-				headerTintColor: '#fff',
-				headerBackTitle: 'Back'
+				headerTitleStyle: {
+					backgroundColor: 'red'
+				},
+				headerTintColor: Colors.black,
+				headerBackTitleVisible: false
 			}}
 		>
 			<Stack.Screen
 				name="welcome"
 				options={{
-					headerTitle: 'BlinkIt'
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
@@ -28,7 +32,7 @@ const PublicLayout = () => {
 			<Stack.Screen
 				name="otp"
 				options={{
-					headerTitle: 'Enter OTP'
+					headerTitle: 'OTP Verification'
 				}}
 			/>
 		</Stack>
