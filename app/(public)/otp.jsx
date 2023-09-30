@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useStore } from '../../store/store';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
@@ -8,12 +8,19 @@ import Colors from '../../theme/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLocalSearchParams } from 'expo-router';
 
+import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
+import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
+import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
+
 const otp = () => {
+	const recaptchaVerifier = useRef(null);
 	const setToken = useStore(state => state.setToken);
-	const [code, setCode] = useState('');
+	const [verificationCode, setVerificationCode] = useState('');
 	const [timerCount, setTimer] = useState(10);
 	const [enableResendButton, setEnableResendButton] = useState(false);
-	const { phone } = useLocalSearchParams();
+	const { phoneNumber } = useLocalSearchParams();
+	const [verificationId, setVerificationId] = useState(useLocalSearchParams().verificationId);
+	const [message, showMessage] = useState(null);
 
 	useEffect(() => {
 		let interval = setInterval(() => {
@@ -30,30 +37,75 @@ const otp = () => {
 		return () => clearInterval(interval);
 	}, []);
 
+	const validateOTP = async code => {
+		setVerificationCode('');
+		try {
+			const credential = PhoneAuthProvider.credential(verificationId, code);
+			const token = await signInWithCredential(auth, credential);
+			console.log(token);
+			showMessage({ text: 'Phone authentication successful 👍' });
+			setToken(token._tokenResponse.idToken);
+		} catch (err) {
+			showMessage({ text: `Error: ${err.message}`, color: 'red' });
+		}
+	};
+
+	const resendVerificationCode = async () => {
+		try {
+			const phoneProvider = new PhoneAuthProvider(auth);
+			const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current);
+			setVerificationId(verificationId);
+			showMessage({
+				text: 'Verification code has been sent to your phone.'
+			});
+		} catch (err) {
+			showMessage({ text: `Error: ${err.message}`, color: 'red' });
+		}
+	};
+
 	return (
 		<View style={styles.container}>
+			<FirebaseRecaptchaVerifierModal
+				ref={recaptchaVerifier}
+				firebaseConfig={firebaseConfig}
+				// attemptInvisibleVerification
+			/>
 			<Text style={styles.title}>We've sent verification code to</Text>
-			<Text style={styles.subTitle}>{phone}</Text>
+			<Text style={styles.subTitle}>{phoneNumber}</Text>
+			<Text style={styles.subTitle}>{verificationId}</Text>
+
 			<OTPInputView
 				style={{ width: '80%', height: 100, alignSelf: 'center' }}
-				pinCount={4}
-				code={code}
-				onCodeChanged={code => {
-					setCode(code);
+				pinCount={6}
+				code={verificationCode}
+				onCodeChanged={verificationCode => {
+					setVerificationCode(verificationCode);
 				}}
 				autoFocusOnLoad
 				codeInputFieldStyle={styles.codeInputFieldStyle}
 				codeInputHighlightStyle={styles.codeInputHighlightStyle}
 				onCodeFilled={code => {
 					console.log(`Code is ${code}, you are good to go!`);
-					setToken('Abc@123');
+					validateOTP(code);
 				}}
 			/>
-			<TouchableOpacity disabled={!enableResendButton} onPress={() => {}}>
+			<TouchableOpacity disabled={!enableResendButton} onPress={resendVerificationCode}>
 				<Text
 					style={[styles.resendText, { color: enableResendButton ? Colors.red : Colors.lightGrey }]}
 				>{`Resend OTP in ${timerCount} sec`}</Text>
 			</TouchableOpacity>
+			{!!message && (
+				<Text
+					style={{
+						color: Colors.red,
+						fontSize: 17,
+						textAlign: 'center',
+						margin: 20
+					}}
+				>
+					{message.text}
+				</Text>
+			)}
 		</View>
 	);
 };
@@ -89,7 +141,8 @@ const styles = StyleSheet.create({
 	codeInputFieldStyle: {
 		width: 45,
 		height: 50,
-		borderRadius: 10
+		borderRadius: 10,
+		color: Colors.black
 	},
 	resendText: {
 		...Fonts.bold(14),
