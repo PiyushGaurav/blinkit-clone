@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { AuthContext } from '../_layout';
+import { useStore } from '../../store/store';
 
 const otp = () => {
-	const { setToken } = useContext(AuthContext);
+	const setToken = useStore(state => state.setToken);
+
 	return (
 		<View>
 			<Text>OTP screen</Text>

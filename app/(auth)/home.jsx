@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { AuthContext } from '../_layout';
+import { useStore } from '../../store/store';
 
 const home = () => {
-	const { setToken } = useContext(AuthContext);
+	const setToken = useStore(state => state.setToken);
 
 	return (
 		<View>

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
-
-export const AuthContext = React.createContext({
-	token: false
-});
+import { useStore } from '../store/store';
 
 const RootLayout = () => {
-	const [token, setToken] = useState(null);
+	const token = useStore(state => state.authToken);
 
 	const InitialLayout = () => {
 		const segments = useSegments();
@@ -27,16 +24,7 @@ const RootLayout = () => {
 		return <Slot />;
 	};
 
-	return (
-		<AuthContext.Provider
-			value={{
-				token,
-				setToken
-			}}
-		>
-			<InitialLayout />
-		</AuthContext.Provider>
-	);
+	return <InitialLayout />;
 };
 
 export default RootLayout;
