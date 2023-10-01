@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, FlatList, RefreshControl, Dimensions } from 'react-native';
 import { useGetProductByCategoryId } from '../../api/product';
 import { Fonts, CommonStyles } from '../../theme';
 import { useLocalSearchParams } from 'expo-router';
-import { ProductCard } from '../../components';
+import { Loader, ProductCard } from '../../components';
 import useRefreshByUser from '../../customHook/useRefreshByUser';
 
 const ProductList = () => {
@@ -16,6 +16,14 @@ const ProductList = () => {
 	};
 
 	const getKeyExtractor = item => item.index;
+
+	if (isLoading) {
+		return (
+			<View style={{ height: Dimensions.get('window').height }}>
+				<Loader />
+			</View>
+		);
+	}
 
 	return (
 		<View style={styles.container}>

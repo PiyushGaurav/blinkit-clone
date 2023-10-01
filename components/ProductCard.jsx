@@ -5,14 +5,14 @@ import { router } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 const ProductCard = data => {
-	const { title, image } = data.data.item;
+	const { title, image, id } = data.data.item;
 	return (
 		<TouchableOpacity
 			onPress={() => {
 				router.push({
-					pathname: '/productList',
+					pathname: '/productDetails',
 					params: {
-						categoryId: item
+						productId: id
 					}
 				});
 			}}

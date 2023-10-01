@@ -28,12 +28,13 @@ const PrivateLayout = () => {
 					headerTitle: 'product List'
 				}}
 			/>
-			{/* <Stack.Screen
+			<Stack.Screen
 				name="productDetails"
 				options={{
-					headerTitle: 'product Details'
+					headerShown: false,
+					presentation: 'transparentModal'
 				}}
-			/> */}
+			/>
 		</Stack>
 	);
 };

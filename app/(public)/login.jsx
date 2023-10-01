@@ -4,8 +4,8 @@ import { router } from 'expo-router';
 import { PhoneAuthProvider } from 'firebase/auth';
 import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { ButtonComp, TextInputWithLabel } from '../../components';
-import { CommonStyles, Fonts } from '../../theme';
+import { AbsoluteCloseButton, ButtonComp, TextInputWithLabel } from '../../components';
+import { Colors, CommonStyles, Fonts } from '../../theme';
 
 const login = () => {
 	const recaptchaVerifier = useRef(null);
@@ -34,9 +34,8 @@ const login = () => {
 				firebaseConfig={firebaseConfig}
 				// attemptInvisibleVerification
 			/>
-			<TouchableOpacity onPress={() => router.back()} style={styles.closeIconView}>
-				<Text>x</Text>
-			</TouchableOpacity>
+
+			<AbsoluteCloseButton onPress={() => router.back()} />
 
 			<View style={styles.content}>
 				<Text style={styles.subTitle}>Log in or Sign up</Text>
@@ -46,14 +45,7 @@ const login = () => {
 					onChangeText={text => setPhoneNumber(text)}
 					keyboardType={'number-pad'}
 				/>
-				<ButtonComp
-					btnText={'Continue'}
-					disabled={phoneNumber.length == 0}
-					// onPress={() => {
-					// 	router.replace({ pathname: '/otp', params: { phone } });
-					// }}
-					onPress={sendVerificationCode}
-				/>
+				<ButtonComp btnText={'Continue'} disabled={phoneNumber.length == 0} onPress={sendVerificationCode} />
 				{!!message && (
 					<Text
 						style={{
@@ -76,18 +68,8 @@ export default login;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'rgba(0,0,0,0.2)',
+		backgroundColor: 'rgba(0,0,0,0.5)',
 		justifyContent: 'flex-end'
-	},
-	closeIconView: {
-		width: 30,
-		height: 30,
-		borderRadius: 15,
-		backgroundColor: 'white',
-		justifyContent: 'center',
-		alignItems: 'center',
-		alignSelf: 'center',
-		marginVertical: 10
 	},
 	content: {
 		height: 250,

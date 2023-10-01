@@ -1,9 +1,10 @@
 import { ActivityIndicator, View } from 'react-native';
 import Colors from '../theme/Colors';
+import { CommonStyles } from '../theme';
 
 const Loader = () => {
 	return (
-		<View style={{ flex: 1, justifyContent: 'center' }}>
+		<View style={CommonStyles.flexCenter}>
 			<ActivityIndicator size="large" color={Colors.skyblue} />
 		</View>
 	);
