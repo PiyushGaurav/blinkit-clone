@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
 import Colors from '../../theme/Colors';
+import { Platform } from 'react-native';
 
 const PublicLayout = () => {
 	return (
@@ -26,7 +27,7 @@ const PublicLayout = () => {
 				name="login"
 				options={{
 					headerShown: false,
-					presentation: 'transparentModal'
+					presentation: Platform.OS == 'ios' ? 'transparentModal' : 'modal'
 				}}
 			/>
 			<Stack.Screen

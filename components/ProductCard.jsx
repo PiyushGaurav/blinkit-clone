@@ -3,12 +3,21 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'rea
 import { Colors, Fonts } from '../theme';
 import { router } from 'expo-router';
 import AddToCartButton from './AddToCartButton';
-import { useProductActions } from '../store/cartStore';
+import { useProductActions, useProductInBasketQuantityById, useProductStore } from '../store/cartStore';
+import QuantityButton from './QuantityButton';
 
 const { width, height } = Dimensions.get('window');
 const ProductCard = data => {
 	const { title, image, id, price } = data.data.item;
-	const { addProductToBasket } = useProductActions();
+
+	const {
+		increaseProductQuantityInBasket,
+		decreaseProductQuantityInBasket,
+		removeProductFromBasket,
+		addProductToBasket
+	} = useProductActions();
+
+	const productQuantity = useProductInBasketQuantityById(id);
 
 	return (
 		<TouchableOpacity
@@ -29,11 +38,25 @@ const ProductCard = data => {
 				</Text>
 				<View style={styles.btnView}>
 					<Text style={styles.price}>{`$${price.toFixed(2)}`}</Text>
-					<AddToCartButton
-						onPress={() => {
-							addProductToBasket(data);
-						}}
-					/>
+					{productQuantity !== undefined ? (
+						<QuantityButton
+							onIncrease={() => increaseProductQuantityInBasket(id)}
+							onDecrease={() => {
+								if (productQuantity == 1) {
+									removeProductFromBasket(id);
+								} else {
+									decreaseProductQuantityInBasket(id);
+								}
+							}}
+							quantity={productQuantity}
+						/>
+					) : (
+						<AddToCartButton
+							onPress={() => {
+								addProductToBasket(data.data.item);
+							}}
+						/>
+					)}
 				</View>
 			</View>
 		</TouchableOpacity>

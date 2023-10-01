@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useProductActions, useProductStore } from '../../store/cartStore';
 import { Colors, CommonStyles } from '../../theme';
 import QuantityButton from '../../components/QuantityButton';
+import { ButtonComp } from '../../components';
+import { getBasketTotalPrice } from '../../utils/basketUtils';
 
 const checkout = () => {
 	const { productsInBasket } = useProductStore();
@@ -13,11 +15,8 @@ const checkout = () => {
 		resetAllProductsInBasket
 	} = useProductActions();
 
-	let data = productsInBasket;
-
 	const renderCartItem = elementInArray => {
-		console.log('elementInArray', elementInArray);
-		const { image, title, price, description, category, id } = elementInArray.product.data.item;
+		const { image, title, price, description, category, id } = elementInArray.product;
 		if (elementInArray.quantity <= 0) {
 			return null;
 		}
@@ -29,7 +28,10 @@ const checkout = () => {
 						{title}
 					</Text>
 					<Text style={styles.desc}>{category}</Text>
-					<Text style={styles.price}>{`$${price}`}</Text>
+					<Text style={styles.price}>
+						{`$${price} x ${elementInArray.quantity} = `}
+						<Text style={{ ...Fonts.medium(14) }}>{`$${elementInArray.quantity * price}`}</Text>
+					</Text>
 				</View>
 
 				<QuantityButton
@@ -58,6 +60,21 @@ const checkout = () => {
 					})}
 				</View>
 			</ScrollView>
+
+			<TouchableOpacity style={styles.checkoutBtnStyle}>
+				<View>
+					<Text numberOfLines={2} style={[styles.price, { color: Colors.white }]}>
+						{getBasketTotalPrice(productsInBasket)}
+					</Text>
+					<Text numberOfLines={2} style={[styles.desc, { color: Colors.white }]}>
+						TOTAL
+					</Text>
+				</View>
+				<Text numberOfLines={2} style={[styles.title, { color: Colors.white }]}>
+					Place Order
+				</Text>
+			</TouchableOpacity>
+			<SafeAreaView style={{ flex: 0 }} />
 		</View>
 	);
 };
@@ -98,11 +115,24 @@ const styles = StyleSheet.create({
 		...Fonts.regular(12)
 	},
 	price: {
-		...Fonts.medium(14)
+		...Fonts.regular(12)
 	},
 	emptyText: {
 		marginVertical: 30,
 		...Fonts.medium(18),
 		textAlign: 'center'
+	},
+	checkoutBtnStyle: {
+		width: '60%',
+		alignSelf: 'flex-end',
+		flexDirection: 'row',
+		backgroundColor: Colors.green,
+		height: 50,
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: 10,
+		paddingHorizontal: 16,
+		margin: 16,
+		borderRadius: 14
 	}
 });

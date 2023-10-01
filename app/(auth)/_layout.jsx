@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
 import Colors from '../../theme/Colors';
+import { Platform } from 'react-native';
 
 const PrivateLayout = () => {
 	return (
@@ -32,15 +33,15 @@ const PrivateLayout = () => {
 				name="productDetails"
 				options={{
 					headerShown: false,
-					presentation: 'transparentModal'
+					presentation: Platform.OS == 'ios' ? 'transparentModal' : 'modal'
 				}}
 			/>
-			{/* <Stack.Screen
+			<Stack.Screen
 				name="checkout"
 				options={{
 					headerTitle: 'Checkout'
 				}}
-			/> */}
+			/>
 		</Stack>
 	);
 };

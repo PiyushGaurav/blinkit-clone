@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, RefreshControl, Dimensions } from 'react-native';
 import { useGetProductByCategoryId } from '../../api/product';
-import { Fonts, CommonStyles } from '../../theme';
+import { Fonts, CommonStyles, Colors } from '../../theme';
 import { useLocalSearchParams } from 'expo-router';
 import { Loader, ProductCard } from '../../components';
 import useRefreshByUser from '../../customHook/useRefreshByUser';
@@ -35,7 +35,6 @@ const ProductList = () => {
 			{isSuccess && (
 				<FlatList
 					data={data}
-					testID="product-list-flat-list"
 					refreshControl={<RefreshControl refreshing={isRefetchingByUser} onRefresh={refetchByUser} />}
 					renderItem={renderItem}
 					keyExtractor={getKeyExtractor}
@@ -52,7 +51,8 @@ export default ProductList;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginVertical: 16
+		padding: 10,
+		backgroundColor: Colors.white
 	},
 	title: {
 		...Fonts.bold(14),

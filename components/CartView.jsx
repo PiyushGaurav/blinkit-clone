@@ -12,18 +12,14 @@ const CartView = () => {
 	const segments = useSegments();
 
 	useEffect(() => {
-		console.log('segments', segments);
 		let onCheckout = segments[1] === 'checkout';
-		console.log('onCheckout', onCheckout);
 		setShowCart(!onCheckout);
 	}, [segments]);
 
-	console.log(productsInBasket);
 	let products = productsInBasket;
 	let totalItem = productsInBasket?.length || 0;
 	products = products.length > 4 ? products.slice(0, 4) : products;
 
-	console.log({ totalItem, showCart });
 	if (totalItem > 0 && showCart) {
 		return (
 			<>
@@ -32,7 +28,7 @@ const CartView = () => {
 						{products.map((elementInArray, index) => {
 							return (
 								<Image
-									source={{ uri: index === products.length - 1 ? elementInArray.product.data.item.image : undefined }}
+									source={{ uri: index === products.length - 1 ? elementInArray.product.image : undefined }}
 									key={index}
 									style={[styles.overlayBox, { left: index * 10 }]}
 								></Image>
@@ -63,7 +59,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		paddingHorizontal: 16,
-		...CommonStyles.shadowStyle,
 		borderTopWidth: 0.3
 	},
 	overlayBoxView: { justifyContent: 'center', alignItems: 'center' },

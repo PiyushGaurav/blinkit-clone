@@ -10,7 +10,8 @@ export const hitSlopProp = {
 
 export default StyleSheet.create({
 	flex: {
-		flex: 1
+		flex: 1,
+		backgroundColor: Colors.white
 	},
 	flexCenter: {
 		flex: 1,

@@ -2,23 +2,30 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Button, StyleSheet } from 'react-native';
 import { Colors, Fonts } from '../theme';
 
-const QuantityButton = ({ onIncrease, onDecrease, quantity }) => {
+const QuantityButton = ({
+	onIncrease = () => {},
+	onDecrease = () => {},
+	quantity,
+	qtyContainer = {},
+	qtyButtonTextStyle = {},
+	qtyTextStyle = {}
+}) => {
 	const renderQtyButton = (styles, isIncrease) => {
 		const { buttonStyle, buttonTextStyle } = styles;
 		const sign = isIncrease ? '\u002B' : '\u2212';
 		return (
 			<TouchableOpacity style={buttonStyle} onPress={isIncrease ? onIncrease : onDecrease}>
-				<Text style={buttonTextStyle}>{sign}</Text>
+				<Text style={[{ ...buttonTextStyle, ...qtyButtonTextStyle }]}>{sign}</Text>
 			</TouchableOpacity>
 		);
 	};
 
-	const renderTitleText = qtyTextStyle => {
-		return <Text style={styles.qtyTextStyle}>{quantity}</Text>;
+	const renderTitleText = () => {
+		return <Text style={[{ ...styles.qtyTextStyle, ...qtyTextStyle }]}>{quantity}</Text>;
 	};
 
 	return (
-		<View style={[styles.container]}>
+		<View style={[{ ...styles.container, ...qtyContainer }]}>
 			{renderQtyButton(styles, false)}
 			{renderTitleText(styles.qtyTextStyle)}
 			{renderQtyButton(styles, true)}
@@ -30,17 +37,17 @@ export default QuantityButton;
 
 const styles = StyleSheet.create({
 	container: {
-		width: 90,
-		paddingVertical: 5,
+		width: 70,
+		height: 25,
 		justifyContent: 'space-between',
 		overflow: 'hidden',
 		flexDirection: 'row',
 		alignItems: 'center',
-		backgroundColor: Colors.green,
-		borderRadius: 10
+		borderRadius: 5,
+		backgroundColor: Colors.green
 	},
 	qtyTextStyle: {
-		...Fonts.medium(18),
+		...Fonts.bold(12),
 		color: Colors.white
 	},
 
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	buttonTextStyle: {
-		...Fonts.medium(20),
+		...Fonts.medium(16),
 		color: Colors.white
 	}
 });

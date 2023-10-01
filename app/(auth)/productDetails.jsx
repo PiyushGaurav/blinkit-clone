@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Fonts, CommonStyles, Colors } from '../../theme';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useGetProductById } from '../../api/product';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AbsoluteCloseButton, AddToCartButton } from '../../components';
+import { AbsoluteCloseButton, AddToCartButton, Loader } from '../../components';
+import { useProductActions, useProductInBasketQuantityById } from '../../store/cartStore';
+import QuantityButton from '../../components/QuantityButton';
 
 const { width, height } = Dimensions.get('window');
-const ProductList = () => {
+const ProductDetails = () => {
 	const { productId } = useLocalSearchParams();
-	console.log('ProductList ID', productId);
 	const { data, isLoading, refetch, isError, isSuccess } = useGetProductById(productId);
+
+	const {
+		increaseProductQuantityInBasket,
+		decreaseProductQuantityInBasket,
+		removeProductFromBasket,
+		addProductToBasket
+	} = useProductActions();
+
+	const productQuantity = useProductInBasketQuantityById(parseInt(productId));
 
 	return (
 		<View style={styles.mainContainer}>
@@ -20,7 +30,7 @@ const ProductList = () => {
 				</View>
 			)}
 			<AbsoluteCloseButton onPress={() => router.back()} />
-			{isSuccess && (
+			{isSuccess ? (
 				<View style={styles.detailsContainer}>
 					<Image source={{ uri: data.image }} style={styles.img} />
 					<View style={styles.content}>
@@ -28,16 +38,43 @@ const ProductList = () => {
 						<Text style={styles.description}>{data.description}</Text>
 						<View style={styles.btnView}>
 							<Text style={styles.price}>{`₹${data.price}`}</Text>
-							<AddToCartButton btnStyle={styles.btnStyle} btnTextStyle={styles.btnTextStyle} onPress={() => {}} />
+							{productQuantity !== undefined ? (
+								<QuantityButton
+									onIncrease={() => increaseProductQuantityInBasket(parseInt(productId))}
+									onDecrease={() => {
+										if (productQuantity == 1) {
+											removeProductFromBasket(parseInt(productId));
+										} else {
+											decreaseProductQuantityInBasket(parseInt(productId));
+										}
+									}}
+									qtyContainer={styles.qtyContainer}
+									qtyTextStyle={styles.qtyTextStyle}
+									qtyButtonTextStyle={styles.qtyButtonTextStyle}
+									quantity={productQuantity}
+								/>
+							) : (
+								<AddToCartButton
+									btnStyle={styles.btnStyle}
+									btnTextStyle={styles.btnTextStyle}
+									onPress={() => {
+										addProductToBasket(data);
+									}}
+								/>
+							)}
 						</View>
 					</View>
+				</View>
+			) : (
+				<View style={styles.detailsContainer}>
+					<Loader />
 				</View>
 			)}
 		</View>
 	);
 };
 
-export default ProductList;
+export default ProductDetails;
 
 const styles = StyleSheet.create({
 	mainContainer: {
@@ -46,7 +83,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end'
 	},
 	detailsContainer: {
-		flex: 0.9,
+		// flex: 0.9,
+		height: height * 0.8,
 		backgroundColor: Colors.white,
 		zIndex: 10,
 		borderTopRightRadius: 10,
@@ -98,5 +136,15 @@ const styles = StyleSheet.create({
 		...Fonts.bold(18),
 		textTransform: 'uppercase',
 		color: Colors.green
+	},
+	qtyContainer: {
+		width: 100,
+		height: 40
+	},
+	qtyTextStyle: {
+		...Fonts.bold(18)
+	},
+	qtyButtonTextStyle: {
+		...Fonts.medium(22)
 	}
 });

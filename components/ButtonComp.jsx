@@ -5,7 +5,7 @@ import { Colors, CommonStyles, Fonts } from '../theme';
 const ButtonComp = ({ onPress = () => {}, btnText = '', btnTextStyle = {}, btnStyle = {}, disabled = false }) => {
 	return (
 		<TouchableOpacity
-			style={[{ ...styles.btnStyle, backgroundColor: disabled ? Colors.lightGrey : Colors.red, ...btnStyle }]}
+			style={[{ ...styles.btnStyle, backgroundColor: disabled ? Colors.lightGrey : Colors.green, ...btnStyle }]}
 			disabled={disabled}
 			activeOpacity={0.8}
 			onPress={onPress}

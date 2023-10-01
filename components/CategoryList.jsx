@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, RefreshControl, Dimensions } from 're
 import { useGetAllCategories } from '../api/product/get-all-categories';
 import useRefreshByUser from '../customHook/useRefreshByUser';
 import CategoryCard from './CategoryCard';
-import { CommonStyles, Fonts } from '../theme';
+import { Colors, CommonStyles, Fonts } from '../theme';
 import Loader from './Loader';
 
 const { height, width } = Dimensions.get('window');
@@ -26,7 +26,7 @@ const CategoryList = () => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={CommonStyles.flex}>
 			<Text style={styles.title}>Shop by Categories</Text>
 			{isError && (
 				<View style={CommonStyles.flexCenter}>
@@ -36,7 +36,6 @@ const CategoryList = () => {
 			{isSuccess && (
 				<FlatList
 					data={data}
-					testID="product-list-flat-list"
 					renderItem={renderItem}
 					keyExtractor={getKeyExtractor}
 					style={CommonStyles.flex}
@@ -53,7 +52,8 @@ export default CategoryList;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginVertical: 16
+		backgroundColor: Colors.white,
+		padding: 16
 	},
 	title: {
 		...Fonts.bold(14),

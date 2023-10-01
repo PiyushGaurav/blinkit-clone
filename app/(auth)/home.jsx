@@ -35,7 +35,6 @@ const home = () => {
 				{isSuccess && (
 					<FlatList
 						data={data}
-						testID="product-list-flat-list"
 						renderItem={renderItem}
 						keyExtractor={getKeyExtractor}
 						style={CommonStyles.flex}
