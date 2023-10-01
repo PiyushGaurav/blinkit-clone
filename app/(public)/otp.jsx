@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useStore } from '../../store/store';
+// import { useStore } from '../../store/store';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLocalSearchParams } from 'expo-router';
@@ -12,7 +12,7 @@ import { Colors, Fonts } from '../../theme';
 
 const otp = () => {
 	const recaptchaVerifier = useRef(null);
-	const setToken = useStore(state => state.setToken);
+	// const setToken = useStore(state => state.setToken);
 	const [verificationCode, setVerificationCode] = useState('');
 	const [timerCount, setTimer] = useState(10);
 	const [enableResendButton, setEnableResendButton] = useState(false);
@@ -41,7 +41,7 @@ const otp = () => {
 			const credential = PhoneAuthProvider.credential(verificationId, code);
 			const token = await signInWithCredential(auth, credential);
 			showMessage({ text: 'Phone authentication successful 👍' });
-			setToken(token._tokenResponse.idToken);
+			// setToken(token._tokenResponse.idToken);
 		} catch (err) {
 			showMessage({ text: `Error: ${err.message}`, color: 'red' });
 		}

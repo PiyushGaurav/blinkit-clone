@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView, RefreshControl, FlatList } from 'react-native';
-import { useStore } from '../../store/store';
+// import { useStore } from '../../store/store';
 import CommonStyles from '../../theme/CommonStyles';
 import { CategoryList, ProductCard, ProductList } from '../../components';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,7 +8,7 @@ import { useGetAllCategories, useGetAllProducts } from '../../api/product';
 import useRefreshByUser from '../../customHook/useRefreshByUser';
 
 const home = () => {
-	const setToken = useStore(state => state.setToken);
+	// const setToken = useStore(state => state.setToken);
 
 	const { data, isLoading, refetch, isError, isSuccess } = useGetAllProducts();
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);

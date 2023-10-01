@@ -3,10 +3,13 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'rea
 import { Colors, Fonts } from '../theme';
 import { router } from 'expo-router';
 import AddToCartButton from './AddToCartButton';
+import { useProductActions } from '../store/cartStore';
 
 const { width, height } = Dimensions.get('window');
 const ProductCard = data => {
 	const { title, image, id, price } = data.data.item;
+	const { addProductToBasket } = useProductActions();
+
 	return (
 		<TouchableOpacity
 			onPress={() => {
@@ -26,7 +29,11 @@ const ProductCard = data => {
 				</Text>
 				<View style={styles.btnView}>
 					<Text style={styles.price}>{`$${price.toFixed(2)}`}</Text>
-					<AddToCartButton onPress={() => {}} />
+					<AddToCartButton
+						onPress={() => {
+							addProductToBasket(data);
+						}}
+					/>
 				</View>
 			</View>
 		</TouchableOpacity>
