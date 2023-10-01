@@ -10,8 +10,8 @@ const RootLayout = () => {
 	// const token = useStore(state => state.authToken);
 
 	const InitialLayout = () => {
-		const segments = useSegments();
 		const router = useRouter();
+		const segments = useSegments();
 
 		useEffect(() => {
 			const inTabsGroup = segments[0] === '(auth)';
@@ -26,13 +26,17 @@ const RootLayout = () => {
 			router.replace('/(auth)/home');
 		}, []);
 
-		return <Slot />;
+		return (
+			<>
+				<Slot />
+				{segments[0] !== '(auth)/checkout' && <CartView />}
+			</>
+		);
 	};
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<InitialLayout />
-			<CartView />
 		</QueryClientProvider>
 	);
 };

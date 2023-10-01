@@ -1,40 +1,57 @@
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image } from 'react-native';
-import React from 'react';
 import ButtonComp from './ButtonComp';
 import { Colors, CommonStyles, Fonts } from '../theme';
 import { useProductsInBasket } from '../store/cartStore';
+import { router, useSegments } from 'expo-router';
 
 const CartView = () => {
 	const productsInBasket = useProductsInBasket();
+
+	const [showCart, setShowCart] = useState(true);
+	const segments = useSegments();
+
+	useEffect(() => {
+		console.log('segments', segments);
+		let onCheckout = segments[1] === 'checkout';
+		console.log('onCheckout', onCheckout);
+		setShowCart(!onCheckout);
+	}, [segments]);
 
 	console.log(productsInBasket);
 	let products = productsInBasket;
 	let totalItem = productsInBasket?.length || 0;
 	products = products.length > 4 ? products.slice(0, 4) : products;
 
-	if (totalItem == 0) {
-		return null;
-	}
-	return (
-		<>
-			<View style={styles.container}>
-				<View style={styles.overlayBoxView}>
-					{products.map((elementInArray, index) => {
-						return (
-							<Image
-								source={{ uri: index === products.length - 1 ? elementInArray.product.data.item.image : '' }}
-								key={index}
-								style={[styles.overlayBox, { left: index * 10 }]}
-							></Image>
-						);
-					})}
+	console.log({ totalItem, showCart });
+	if (totalItem > 0 && showCart) {
+		return (
+			<>
+				<View style={styles.container}>
+					<View style={styles.overlayBoxView}>
+						{products.map((elementInArray, index) => {
+							return (
+								<Image
+									source={{ uri: index === products.length - 1 ? elementInArray.product.data.item.image : undefined }}
+									key={index}
+									style={[styles.overlayBox, { left: index * 10 }]}
+								></Image>
+							);
+						})}
+					</View>
+					<Text style={[styles.item, { marginLeft: 10 + products.length * 10 }]}>{`${totalItem} Items`}</Text>
+					<ButtonComp
+						btnText="Next"
+						btnStyle={styles.btnStyle}
+						btnTextStyle={styles.btnTextStyle}
+						onPress={() => router.push('(auth)/checkout')}
+					/>
 				</View>
-				<Text style={[styles.item, { marginLeft: 10 + products.length * 10 }]}>{`${totalItem} Items`}</Text>
-				<ButtonComp btnText="Next" btnStyle={styles.btnStyle} btnTextStyle={styles.btnTextStyle} />
-			</View>
-			<SafeAreaView style={{ flex: 0 }} />
-		</>
-	);
+				<SafeAreaView style={{ flex: 0 }} />
+			</>
+		);
+	}
+	return null;
 };
 
 export default CartView;

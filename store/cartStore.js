@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 export const updateProductQuantity = (productsInBasket, productId, updateType) => {
 	return productsInBasket.map(productInBasket => {
-		if (productInBasket.product.id === productId) {
+		if (productInBasket.product.data.item.id === productId) {
 			return {
 				...productInBasket,
 				quantity: updateType === 'increase' ? productInBasket.quantity + 1 : productInBasket.quantity - 1
@@ -30,7 +30,7 @@ export const useProductStore = create((set, get) => ({
 		removeProductFromBasket: productId =>
 			set({
 				productsInBasket: [
-					...get().productsInBasket.filter(productInBasket => productInBasket.product.id !== productId)
+					...get().productsInBasket.filter(productInBasket => productInBasket.product.data.item.id !== productId)
 				]
 			}),
 		increaseProductQuantityInBasket: productId => {
@@ -52,5 +52,6 @@ export const useProductsInBasket = () => useProductStore(state => state.products
 export const useProductsInBasketCount = () => useProductStore(state => state.productsInBasket.length);
 export const useProductInBasketQuantityById = productId =>
 	useProductStore(
-		state => state.productsInBasket.find(productInBasket => productInBasket.product.id === productId)?.quantity
+		state =>
+			state.productsInBasket.find(productInBasket => productInBasket.product.data.item.id === productId)?.quantity
 	);

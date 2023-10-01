@@ -35,6 +35,12 @@ const PrivateLayout = () => {
 					presentation: 'transparentModal'
 				}}
 			/>
+			{/* <Stack.Screen
+				name="checkout"
+				options={{
+					headerTitle: 'Checkout'
+				}}
+			/> */}
 		</Stack>
 	);
 };

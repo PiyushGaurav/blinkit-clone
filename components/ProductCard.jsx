@@ -14,7 +14,7 @@ const ProductCard = data => {
 		<TouchableOpacity
 			onPress={() => {
 				router.push({
-					pathname: '/productDetails',
+					pathname: '(auth)/productDetails',
 					params: {
 						productId: id
 					}
