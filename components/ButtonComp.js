@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import CommonStyles from '../theme/CommonStyles';
-import { Fonts } from '../theme/Fonts';
-import Colors from '../theme/Colors';
+import { Colors, CommonStyles, Fonts } from '../theme';
 
 const ButtonComp = ({ onPress = () => {}, btnText = '', btnTextStyle = {}, btnStyle = {}, disabled = false }) => {
 	return (

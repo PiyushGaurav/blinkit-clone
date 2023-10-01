@@ -1,14 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { router } from 'expo-router';
-import ButtonComp from '../../components/ButtonComp';
-import Colors from '../../theme/Colors';
-import { Fonts } from '../../theme/Fonts';
-import CommonStyles from '../../theme/CommonStyles';
+import { ButtonComp } from '../../components';
+import { Colors, CommonStyles, Fonts } from '../../theme';
 
 const welcome = () => {
 	return (
-		<View style={styles.container}>
+		<View style={CommonStyles.flex}>
 			<View style={styles.headerImage}></View>
 			<View style={styles.content}>
 				<View style={styles.appLogo} />

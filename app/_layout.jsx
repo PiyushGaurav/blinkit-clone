@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useStore } from '../store/store';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+export const queryClient = new QueryClient();
 
 const RootLayout = () => {
 	const token = useStore(state => state.authToken);
@@ -24,7 +27,11 @@ const RootLayout = () => {
 		return <Slot />;
 	};
 
-	return <InitialLayout />;
+	return (
+		<QueryClientProvider client={queryClient}>
+			<InitialLayout />
+		</QueryClientProvider>
+	);
 };
 
 export default RootLayout;

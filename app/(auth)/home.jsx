@@ -1,20 +1,16 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import { useStore } from '../../store/store';
+import CommonStyles from '../../theme/CommonStyles';
+import { CategoryList } from '../../components';
 
 const home = () => {
 	const setToken = useStore(state => state.setToken);
 
 	return (
-		<View>
-			<Text>home</Text>
-			<Button
-				onPress={() => {
-					setToken(null);
-				}}
-				title="Logout"
-			/>
-		</View>
+		<SafeAreaView style={CommonStyles.flex}>
+			<CategoryList />
+		</SafeAreaView>
 	);
 };
 

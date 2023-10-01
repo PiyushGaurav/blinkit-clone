@@ -1,13 +1,11 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import React, { useState, useRef } from 'react';
 import { router } from 'expo-router';
-import { Fonts } from '../../theme/Fonts';
-import CommonStyles from '../../theme/CommonStyles';
-import TextInputWithLabel from '../../components/TextInputWithLabel';
-import ButtonComp from '../../components/ButtonComp';
 import { PhoneAuthProvider } from 'firebase/auth';
 import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { ButtonComp, TextInputWithLabel } from '../../components';
+import { CommonStyles, Fonts } from '../../theme';
 
 const login = () => {
 	const recaptchaVerifier = useRef(null);

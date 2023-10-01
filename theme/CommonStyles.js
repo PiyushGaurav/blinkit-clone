@@ -9,6 +9,14 @@ export const hitSlopProp = {
 };
 
 export default StyleSheet.create({
+	flex: {
+		flex: 1
+	},
+	flexCenter: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	loader: {
 		position: 'absolute',
 		left: 0,

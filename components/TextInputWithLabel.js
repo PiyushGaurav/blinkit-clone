@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import Colors from '../theme/Colors';
-import { Fonts } from '../theme/Fonts';
+import { Fonts } from '../theme';
 
 const TextInputWithLabel = ({
 	value,

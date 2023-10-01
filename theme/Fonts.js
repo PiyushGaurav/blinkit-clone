@@ -1,17 +1,17 @@
 const defaultFont = 'Roboto';
 
-export const Fonts = {
+export default Fonts = {
 	regular: (s = 12) => {
 		return {
 			fontSize: s,
-			fontWeight: '200'
+			fontWeight: '400'
 			// fontFamily: `${defaultFont}-Regular`
 		};
 	},
 	medium: (s = 12) => {
 		return {
 			fontSize: s,
-			fontWeight: '400'
+			fontWeight: '600'
 			// fontFamily: `${defaultFont}-Medium`
 		};
 	},

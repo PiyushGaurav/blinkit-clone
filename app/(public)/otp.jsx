@@ -2,15 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useStore } from '../../store/store';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import ButtonComp from '../../components/ButtonComp';
-import { Fonts } from '../../theme/Fonts';
-import Colors from '../../theme/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLocalSearchParams } from 'expo-router';
 
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
+import { Colors, Fonts } from '../../theme';
 
 const otp = () => {
 	const recaptchaVerifier = useRef(null);
