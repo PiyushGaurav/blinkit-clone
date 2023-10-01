@@ -17,11 +17,12 @@ const RootLayout = () => {
 
 			console.log('User changed: ', token);
 
-			if (token && !inTabsGroup) {
-				router.replace('/home');
-			} else if (!token) {
-				router.replace('/welcome');
-			}
+			// if (token && !inTabsGroup) {
+			// 	router.replace('/home');
+			// } else if (!token) {
+			// 	router.replace('/welcome');
+			// }
+			router.replace('/(auth)/home');
 		}, [token]);
 
 		return <Slot />;

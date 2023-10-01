@@ -1,18 +1,30 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors, Fonts } from '../theme';
+import { router } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 const CategoryCard = data => {
+	const { item } = data.data;
 	return (
-		<View style={styles.cardContainer}>
+		<TouchableOpacity
+			onPress={() => {
+				router.push({
+					pathname: '(auth)/productList',
+					params: {
+						categoryId: item
+					}
+				});
+			}}
+			style={styles.cardContainer}
+		>
 			<View style={styles.img}></View>
 			<View style={styles.details}>
 				<Text numberOfLines={2} style={styles.title}>
-					{data.data.item}
+					{item}
 				</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
