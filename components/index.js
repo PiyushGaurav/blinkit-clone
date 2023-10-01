@@ -5,3 +5,4 @@ export { default as Loader } from './Loader';
 export { default as TextInputWithLabel } from './TextInputWithLabel';
 export { default as ProductCard } from './ProductCard';
 export { default as AbsoluteCloseButton } from './AbsoluteCloseButton';
+export { default as AddToCartButton } from './AddToCartButton';

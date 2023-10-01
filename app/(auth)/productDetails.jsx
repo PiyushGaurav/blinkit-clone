@@ -4,7 +4,7 @@ import { Fonts, CommonStyles, Colors } from '../../theme';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useGetProductById } from '../../api/product';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AbsoluteCloseButton } from '../../components';
+import { AbsoluteCloseButton, AddToCartButton } from '../../components';
 
 const { width, height } = Dimensions.get('window');
 const ProductList = () => {
@@ -26,7 +26,10 @@ const ProductList = () => {
 					<View style={styles.content}>
 						<Text style={styles.title}>{data.title}</Text>
 						<Text style={styles.description}>{data.description}</Text>
-						<Text style={styles.price}>{`₹${data.price}`}</Text>
+						<View style={styles.btnView}>
+							<Text style={styles.price}>{`₹${data.price}`}</Text>
+							<AddToCartButton btnStyle={styles.btnStyle} btnTextStyle={styles.btnTextStyle} onPress={() => {}} />
+						</View>
 					</View>
 				</View>
 			)}
@@ -75,5 +78,25 @@ const styles = StyleSheet.create({
 	},
 	price: {
 		...Fonts.bold(26)
+	},
+	btnView: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between'
+	},
+	btnStyle: {
+		backgroundColor: Colors.lightGreen,
+		borderWidth: 0.4,
+		borderColor: Colors.green,
+		borderRadius: 5,
+		width: 100,
+		height: 40,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	btnTextStyle: {
+		...Fonts.bold(18),
+		textTransform: 'uppercase',
+		color: Colors.green
 	}
 });

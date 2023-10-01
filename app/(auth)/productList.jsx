@@ -15,7 +15,7 @@ const ProductList = () => {
 		return <ProductCard data={item} />;
 	};
 
-	const getKeyExtractor = item => item.index;
+	const getKeyExtractor = item => item.index + Math.random(100).toString();
 
 	if (isLoading) {
 		return (
@@ -40,8 +40,7 @@ const ProductList = () => {
 					renderItem={renderItem}
 					keyExtractor={getKeyExtractor}
 					style={CommonStyles.flex}
-					numColumns={4}
-					contentContainerStyle={{ margin: 5 }}
+					numColumns={3}
 				/>
 			)}
 		</View>

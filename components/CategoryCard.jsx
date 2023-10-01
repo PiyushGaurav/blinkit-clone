@@ -18,7 +18,6 @@ const CategoryCard = data => {
 			}}
 			style={styles.cardContainer}
 		>
-			<View style={styles.img}></View>
 			<View style={styles.details}>
 				<Text numberOfLines={2} style={styles.title}>
 					{item}
@@ -33,27 +32,27 @@ export default CategoryCard;
 const styles = StyleSheet.create({
 	cardContainer: {
 		flex: 1,
-		width: width / 4.5,
+		width: width / 2.5,
 		borderRadius: 10,
 		margin: 10,
 		justifyContent: 'flex-start',
 		alignItems: 'center'
 	},
-	img: {
-		backgroundColor: Colors.skyblue,
-		width: width / 4.5,
-		height: width / 4.5,
-		borderRadius: 15
-	},
 	details: {
 		flex: 1,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor: Colors.lightGreen,
+		width: '100%',
+		height: 50,
+		borderRadius: 30,
+		borderWidth: 0.5,
+		borderColor: Colors.green
 	},
 	title: {
 		marginVertical: 5,
 		flexWrap: 'wrap',
 		textTransform: 'capitalize',
-		...Fonts.regular(13),
+		...Fonts.bold(14),
 		textAlign: 'center'
 	}
 });

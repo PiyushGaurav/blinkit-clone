@@ -6,15 +6,16 @@ import CategoryCard from './CategoryCard';
 import { CommonStyles, Fonts } from '../theme';
 import Loader from './Loader';
 
+const { height, width } = Dimensions.get('window');
+
 const CategoryList = () => {
 	const { data, isLoading, refetch, isError, isSuccess } = useGetAllCategories();
-	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	const renderItem = item => {
 		return <CategoryCard data={item} />;
 	};
 
-	const getKeyExtractor = item => item.index;
+	const getKeyExtractor = item => item.index + Math.random(100).toString();
 
 	if (isLoading) {
 		return (
@@ -36,11 +37,10 @@ const CategoryList = () => {
 				<FlatList
 					data={data}
 					testID="product-list-flat-list"
-					refreshControl={<RefreshControl refreshing={isRefetchingByUser} onRefresh={refetchByUser} />}
 					renderItem={renderItem}
 					keyExtractor={getKeyExtractor}
 					style={CommonStyles.flex}
-					numColumns={4}
+					numColumns={2}
 					contentContainerStyle={{ margin: 5 }}
 				/>
 			)}

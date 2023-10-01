@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useStore } from '../store/store';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import CartView from '../components/CartView';
 
 export const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const RootLayout = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<InitialLayout />
+			<CartView />
 		</QueryClientProvider>
 	);
 };
