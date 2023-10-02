@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image } from 'react-native';
 import ButtonComp from './ButtonComp';
 import { Colors, CommonStyles, Fonts } from '../theme';
-import { useProductsInBasket } from '../store/cartStore';
+import { useProductStore } from '../store/cartStore';
 import { router, useSegments } from 'expo-router';
 
 const CartView = () => {
-	const productsInBasket = useProductsInBasket();
+	const { productsInBasket } = useProductStore();
 
 	const [showCart, setShowCart] = useState(true);
 	const segments = useSegments();
 
 	useEffect(() => {
-		let onCheckout = segments[1] === 'checkout';
+		let onCheckout = segments[1] === 'checkout' || segments[1] === 'settings' || segments[1] === 'about';
 		setShowCart(!onCheckout);
 	}, [segments]);
 
@@ -59,15 +59,20 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		paddingHorizontal: 16,
-		borderTopWidth: 0.3
+		borderTopWidth: 1,
+		borderColor: Colors.lightGrey
 	},
-	overlayBoxView: { justifyContent: 'center', alignItems: 'center' },
+	overlayBoxView: {
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	overlayBox: {
 		position: 'absolute',
 		width: 45,
 		height: 45,
 		backgroundColor: Colors.lightGreen,
-		borderWidth: 0.2,
+		borderWidth: 1,
+		borderColor: Colors.lightGrey,
 		borderRadius: 10
 	},
 	item: {

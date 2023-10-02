@@ -43,9 +43,15 @@ const PrivateLayout = () => {
 				}}
 			/>
 			<Stack.Screen
-				name="setting"
+				name="settings"
 				options={{
-					headerTitle: 'Setting'
+					headerTitle: 'Settings'
+				}}
+			/>
+			<Stack.Screen
+				name="about"
+				options={{
+					headerTitle: 'About Us'
 				}}
 			/>
 		</Stack>

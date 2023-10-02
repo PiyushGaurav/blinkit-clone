@@ -1,19 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useProductActions, useProductStore } from '../../store/cartStore';
+import { useProductStore } from '../../store/cartStore';
 import { Colors, CommonStyles } from '../../theme';
 import QuantityButton from '../../components/QuantityButton';
-import { ButtonComp } from '../../components';
 import { getBasketTotalPrice } from '../../utils/basketUtils';
 
 const checkout = () => {
-	const { productsInBasket } = useProductStore();
 	const {
+		productsInBasket,
 		increaseProductQuantityInBasket,
 		decreaseProductQuantityInBasket,
-		removeProductFromBasket,
-		resetAllProductsInBasket
-	} = useProductActions();
+		removeProductFromBasket
+	} = useProductStore();
 
 	const renderCartItem = elementInArray => {
 		const { image, title, price, description, category, id } = elementInArray.product;

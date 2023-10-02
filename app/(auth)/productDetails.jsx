@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { Fonts, CommonStyles, Colors } from '../../theme';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useGetProductById } from '../../api/product';
-import { ScrollView } from 'react-native-gesture-handler';
 import { AbsoluteCloseButton, AddToCartButton, Loader } from '../../components';
-import { useProductActions, useProductInBasketQuantityById } from '../../store/cartStore';
+import { useProductInBasketQuantityById, useProductStore } from '../../store/cartStore';
 import QuantityButton from '../../components/QuantityButton';
 
 const { width, height } = Dimensions.get('window');
@@ -18,7 +17,7 @@ const ProductDetails = () => {
 		decreaseProductQuantityInBasket,
 		removeProductFromBasket,
 		addProductToBasket
-	} = useProductActions();
+	} = useProductStore();
 
 	const productQuantity = useProductInBasketQuantityById(parseInt(productId));
 

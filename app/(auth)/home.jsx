@@ -20,12 +20,12 @@ const home = () => {
 	return (
 		<SafeAreaView style={CommonStyles.flex}>
 			<TouchableOpacity
-				style={{ width: 20, height: 20 }}
+				style={{ width: 30, height: 30, alignSelf: 'flex-end', margin: 20 }}
 				onPress={() => {
-					router.push('settings');
+					router.push('(auth)/settings');
 				}}
 			>
-				<Image source={require('../../assets/welcome.png')} style={{ width: 20, height: 20 }} />
+				<Image source={require('../../assets/user.png')} style={{ width: 30, height: 30 }} />
 			</TouchableOpacity>
 			{isError && (
 				<View style={CommonStyles.flexCenter}>
