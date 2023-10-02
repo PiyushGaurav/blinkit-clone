@@ -42,6 +42,12 @@ const PrivateLayout = () => {
 					headerTitle: 'Checkout'
 				}}
 			/>
+			<Stack.Screen
+				name="setting"
+				options={{
+					headerTitle: 'Setting'
+				}}
+			/>
 		</Stack>
 	);
 };

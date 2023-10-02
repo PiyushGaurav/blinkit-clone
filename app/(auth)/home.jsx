@@ -1,15 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView, RefreshControl, FlatList } from 'react-native';
-// import { useStore } from '../../store/store';
+import { StyleSheet, Text, View, Image, SafeAreaView, RefreshControl, FlatList, TouchableOpacity } from 'react-native';
 import CommonStyles from '../../theme/CommonStyles';
 import { CategoryList, ProductCard, ProductList } from '../../components';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useGetAllCategories, useGetAllProducts } from '../../api/product';
+import { useGetAllProducts } from '../../api/product';
 import useRefreshByUser from '../../customHook/useRefreshByUser';
+import { router } from 'expo-router';
 
 const home = () => {
-	// const setToken = useStore(state => state.setToken);
-
 	const { data, isLoading, refetch, isError, isSuccess } = useGetAllProducts();
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
@@ -21,6 +19,14 @@ const home = () => {
 
 	return (
 		<SafeAreaView style={CommonStyles.flex}>
+			<TouchableOpacity
+				style={{ width: 20, height: 20 }}
+				onPress={() => {
+					router.push('settings');
+				}}
+			>
+				<Image source={require('../../assets/welcome.png')} style={{ width: 20, height: 20 }} />
+			</TouchableOpacity>
 			{isError && (
 				<View style={CommonStyles.flexCenter}>
 					<Text>An error occurred</Text>
