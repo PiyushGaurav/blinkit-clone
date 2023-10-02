@@ -75,7 +75,7 @@ const otp = () => {
 				onCodeChanged={verificationCode => {
 					setVerificationCode(verificationCode);
 				}}
-				autoFocusOnLoad
+				autoFocusOnLoad={false}
 				codeInputFieldStyle={styles.codeInputFieldStyle}
 				codeInputHighlightStyle={styles.codeInputHighlightStyle}
 				onCodeFilled={code => {

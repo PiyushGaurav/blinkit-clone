@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingHorizontal: 8,
-		...CommonStyles.shadowStyle,
 		margin: 16,
 		height: 50,
 		borderRadius: 10

@@ -8,6 +8,7 @@ const about = () => {
 			<Image source={require('../../assets/welcome.png')} style={styles.appLogo} />
 			<Text style={styles.title}>BlinkIt Clone</Text>
 			<Text style={styles.subtitle}>v1.0.0</Text>
+			<Text style={styles.subtitle}>Developed by : Piyush Gaurav</Text>
 		</View>
 	);
 };

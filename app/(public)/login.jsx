@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end',
 		bottom: 0,
 		justifyContent: 'center',
-		...CommonStyles.shadowStyle,
 		zIndex: 10
 	},
 	subTitle: {

@@ -1,5 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, RefreshControl, FlatList, TouchableOpacity } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	SafeAreaView,
+	RefreshControl,
+	FlatList,
+	TouchableOpacity,
+	Platform
+} from 'react-native';
 import CommonStyles from '../../theme/CommonStyles';
 import { CategoryList, ProductCard, ProductList } from '../../components';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -20,7 +30,15 @@ const home = () => {
 	return (
 		<SafeAreaView style={CommonStyles.flex}>
 			<TouchableOpacity
-				style={{ width: 30, height: 30, alignSelf: 'flex-end', margin: 20 }}
+				style={{
+					width: 30,
+					height: 30,
+					alignSelf: 'flex-end',
+					marginHorizontal: 16,
+					marginTop: Platform.OS == 'ios' ? 0 : 40,
+					marginBottom: 16,
+					backgroundColor: 'red'
+				}}
 				onPress={() => {
 					router.push('(auth)/settings');
 				}}
