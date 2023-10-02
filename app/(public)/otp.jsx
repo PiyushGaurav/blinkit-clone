@@ -39,8 +39,9 @@ const otp = () => {
 		try {
 			const credential = PhoneAuthProvider.credential(verificationId, code);
 			const token = await signInWithCredential(auth, credential);
+			console.log(token);
 			showMessage({ text: 'Phone authentication successful 👍' });
-			setToken(token._tokenResponse.idToken);
+			setToken(token._tokenResponse);
 		} catch (err) {
 			showMessage({ text: `Error: ${err.message}`, color: 'red' });
 		}

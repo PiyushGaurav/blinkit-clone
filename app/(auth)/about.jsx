@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { Colors, CommonStyles, Fonts } from '../../theme';
+import { Colors, Fonts } from '../../theme';
 
 const about = () => {
 	return (
@@ -17,7 +17,8 @@ export default about;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: Colors.white
 	},
 	appLogo: {
 		width: 60,

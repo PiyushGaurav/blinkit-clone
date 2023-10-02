@@ -7,7 +7,7 @@ import { useAuthStore } from '../store/authStore';
 export const queryClient = new QueryClient();
 
 const RootLayout = () => {
-	const token = useAuthStore(state => state.authToken);
+	const user = useAuthStore(state => state.authToken);
 
 	const InitialLayout = () => {
 		const router = useRouter();
@@ -16,14 +16,15 @@ const RootLayout = () => {
 		useEffect(() => {
 			const inTabsGroup = segments[0] === '(auth)';
 
-			console.log('User changed: ', token);
+			console.log('User changed: ', user?.idToken);
+			console.log('Root layout', user);
 
-			if (token && !inTabsGroup) {
+			if (user?.idToken && !inTabsGroup) {
 				router.replace('/home');
-			} else if (!token) {
+			} else if (!user?.idToken) {
 				router.replace('/welcome');
 			}
-		}, [token]);
+		}, [user]);
 
 		return (
 			<>

@@ -9,6 +9,7 @@ import { router } from 'expo-router';
 const settings = () => {
 	const setToken = useAuthStore(state => state.setToken);
 	const { resetAllProductsInBasket } = useProductStore();
+	const user = useAuthStore(state => state.authToken);
 
 	const settingListItem = (path, title, onPress) => {
 		return (
@@ -69,7 +70,7 @@ const settings = () => {
 	return (
 		<View style={CommonStyles.flex}>
 			<Text style={styles.title}>My Account</Text>
-			<Text style={styles.number}>7906951245</Text>
+			<Text style={styles.number}>{user?.phoneNumber}</Text>
 
 			{settingListItem(require('../../assets/info.png'), 'About Us', () => {
 				router.push('(auth)/about');
