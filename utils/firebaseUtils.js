@@ -8,7 +8,7 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: 'AIzaSyBuDrd0gdsGMZavs_Nk0yr0jndZpdCmqHw',
+	apiKey: process.env.EXPO_PUBLIC_API_KEY,
 	authDomain: 'blinkit-clone-1b681.firebaseapp.com',
 	projectId: 'blinkit-clone-1b681',
 	storageBucket: 'blinkit-clone-1b681.appspot.com',

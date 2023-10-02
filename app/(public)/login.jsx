@@ -54,9 +54,9 @@ const login = () => {
 						style={{
 							height: 50,
 							borderColor: 'gray',
-							...Fonts.medium(16),
-							placeholderTextColor: 'gray'
+							...Fonts.medium(16)
 						}}
+						placeholderTextColor={'grey'}
 						onChangeText={text => setPhoneNumber(text)}
 						value={phoneNumber}
 						keyboardType={'number-pad'}
