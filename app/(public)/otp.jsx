@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-// import { useStore } from '../../store/store';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLocalSearchParams } from 'expo-router';
@@ -9,12 +8,13 @@ import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth'
 import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import { Colors, Fonts } from '../../theme';
+import { useAuthStore } from '../../store/authStore';
 
 const otp = () => {
 	const recaptchaVerifier = useRef(null);
-	// const setToken = useStore(state => state.setToken);
+	const setToken = useAuthStore(state => state.setToken);
 	const [verificationCode, setVerificationCode] = useState('');
-	const [timerCount, setTimer] = useState(10);
+	const [timerCount, setTimer] = useState(30);
 	const [enableResendButton, setEnableResendButton] = useState(false);
 	const { phoneNumber } = useLocalSearchParams();
 	const [verificationId, setVerificationId] = useState(useLocalSearchParams().verificationId);
@@ -29,8 +29,7 @@ const otp = () => {
 				}
 				return lastTimerCount - 1;
 			});
-		}, 1000); //each count lasts for a second
-		//cleanup the interval on complete
+		}, 1000);
 
 		return () => clearInterval(interval);
 	}, []);
@@ -41,7 +40,7 @@ const otp = () => {
 			const credential = PhoneAuthProvider.credential(verificationId, code);
 			const token = await signInWithCredential(auth, credential);
 			showMessage({ text: 'Phone authentication successful 👍' });
-			// setToken(token._tokenResponse.idToken);
+			setToken(token._tokenResponse.idToken);
 		} catch (err) {
 			showMessage({ text: `Error: ${err.message}`, color: 'red' });
 		}
@@ -69,8 +68,6 @@ const otp = () => {
 			/>
 			<Text style={styles.title}>We've sent verification code to</Text>
 			<Text style={styles.subTitle}>{phoneNumber}</Text>
-			<Text style={styles.subTitle}>{verificationId}</Text>
-
 			<OTPInputView
 				style={{ width: '80%', height: 100, alignSelf: 'center' }}
 				pinCount={6}
