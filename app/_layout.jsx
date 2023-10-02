@@ -17,8 +17,6 @@ const RootLayout = () => {
 			const inTabsGroup = segments[0] === '(auth)';
 
 			console.log('User changed: ', user?.idToken);
-			console.log('Root layout', user);
-
 			if (user?.idToken && !inTabsGroup) {
 				router.replace('/home');
 			} else if (!user?.idToken) {

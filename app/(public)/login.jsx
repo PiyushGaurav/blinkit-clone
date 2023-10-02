@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, KeyboardAvoidingView } from 'react-native';
 import React, { useState, useRef } from 'react';
 import { router } from 'expo-router';
 import { PhoneAuthProvider } from 'firebase/auth';
 import { auth, app, firebaseConfig } from '../../utils/firebaseUtils';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { AbsoluteCloseButton, ButtonComp, TextInputWithLabel } from '../../components';
+import { AbsoluteCloseButton, ButtonComp } from '../../components';
 import { Colors, CommonStyles, Fonts } from '../../theme';
 
 const login = () => {
@@ -16,12 +16,12 @@ const login = () => {
 	const sendVerificationCode = async () => {
 		try {
 			const phoneProvider = new PhoneAuthProvider(auth);
-			const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current);
+			const verificationId = await phoneProvider.verifyPhoneNumber(`+91${phoneNumber}`, recaptchaVerifier.current);
 			setVerificationId(verificationId);
 			showMessage({
 				text: 'Verification code has been sent to your phone.'
 			});
-			router.replace({ pathname: '/otp', params: { phoneNumber, verificationId } });
+			router.replace({ pathname: '/otp', params: { phoneNumber: `+91${phoneNumber}`, verificationId } });
 		} catch (err) {
 			showMessage({ text: `Error: ${err.message}`, color: 'red' });
 		}
@@ -39,13 +39,32 @@ const login = () => {
 
 			<View style={styles.content}>
 				<Text style={styles.subTitle}>Log in or Sign up</Text>
-				<TextInputWithLabel
-					placeholder={'Enter mobile number'}
-					label={'Phone'}
-					onChangeText={text => setPhoneNumber(text)}
-					keyboardType={'number-pad'}
-				/>
-				<ButtonComp btnText={'Continue'} disabled={phoneNumber.length == 0} onPress={sendVerificationCode} />
+				<View
+					style={{
+						flexDirection: 'row',
+						borderWidth: 1,
+						alignItems: 'center',
+						margin: 16,
+						borderRadius: 10,
+						borderColor: Colors.grey
+					}}
+				>
+					<Text style={{ ...Fonts.bold(16), paddingLeft: 16, paddingHorizontal: 5 }}>+91</Text>
+					<TextInput
+						style={{
+							height: 50,
+							borderColor: 'gray',
+							...Fonts.medium(16),
+							placeholderTextColor: 'gray'
+						}}
+						onChangeText={text => setPhoneNumber(text)}
+						value={phoneNumber}
+						keyboardType={'number-pad'}
+						placeholder="Enter mobile number"
+					/>
+				</View>
+
+				<ButtonComp btnText={'Continue'} disabled={phoneNumber.length !== 10} onPress={sendVerificationCode} />
 				{!!message && (
 					<Text
 						style={{

@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
 	},
 	footerText: {
 		...Fonts.regular(10),
-		backgroundColor: Colors.lightGrey,
 		padding: 3,
 		textAlign: 'center'
 	}
